@@ -1,0 +1,23 @@
+Table persons as P {
+  id int [pk, increment] // auto-increment
+  name varchar
+  government_id varchar
+  email varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table debts as D {
+  id int [pk, increment] // auto-increment
+  person_id int
+  amount numeric
+  due_date date
+  status string
+  paid_at datetime
+  paid_amount decimal
+  paid_by varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Ref: P.id < D.person_id

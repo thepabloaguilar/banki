@@ -1,0 +1,7 @@
+**/**
+!alembic
+!banki
+!docker
+!alembic.ini
+!poetry.lock
+!pyproject.toml

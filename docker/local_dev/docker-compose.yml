@@ -1,0 +1,18 @@
+version: "3.3"
+
+services:
+  banki-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: banki
+    ports:
+      - "6000:5432"
+  banki-smtp-server:
+    image: mailhog/mailhog
+    restart: always
+    ports:
+      - "7000:1025" # SMTP Server
+      - "7001:8025" # Web UI

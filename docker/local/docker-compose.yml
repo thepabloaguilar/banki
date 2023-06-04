@@ -1,0 +1,35 @@
+version: "3.3"
+
+services:
+  local-banki-api:
+    build:
+      dockerfile: docker/local/Dockerfile
+      context: ../..
+    ports:
+      - "8000:8000"
+    environment:
+      SQLALCHEMY_DB_URI: "postgresql+psycopg2://user:password@local-banki-db:5432/banki"
+      SQLALCHEMY_ECHO: "False"
+    depends_on:
+      - local-banki-db
+      - banki-smtp-server
+  local-banki-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: banki
+    ports:
+      - "6000:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  banki-smtp-server:
+    image: mailhog/mailhog
+    restart: always
+    ports:
+      - "7000:1025" # SMTP Server
+      - "7001:8025" # Web UI
